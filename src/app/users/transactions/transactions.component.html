@@ -1,0 +1,75 @@
+<div class=" table-responsive p-3 m-auto">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Value</th>
+                <th scope="col">Points</th>
+                <th scope="col">Type</th>
+                <th scope="col">Created Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="pointer " (click)="showDialog(item)" *ngFor="let item of transactions">
+                <td>{{item._id}}</td>
+                <td>{{item.value}}</td>
+                <td>{{item.points}}</td>
+                <td>{{item.type}}</td>
+                <td>{{item.createdDate | date: 'yyyy/MM/dd'}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="text-center">
+    <ngb-datepicker class=" m-1" #dp (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
+        outsideDays="hidden">
+    </ngb-datepicker>
+
+    <ng-template #t let-date let-focused="focused">
+        <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+            [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+            (mouseleave)="hoveredDate = null">
+            {{ date.day }}
+        </span>
+    </ng-template>
+    <ng-container #vc></ng-container>
+
+    <ng-template #modal_1>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel"> Transaction detail
+                        </h4>
+                    </div>
+                    <div class="modal-body"> 
+                        <ul >
+                            <li>
+                                <p class="font-weight-bold m-0">Transaction ID: </p> {{transactionDetail._id}}
+                            </li>
+                            <li>
+                                <p class="font-weight-bold m-0">Value: </p> {{transactionDetail.value}}
+                            </li>
+                            <li>
+                                <p class="font-weight-bold m-0">Points: </p> {{transactionDetail.points}}
+                            </li>
+                            <li>
+                                <p class="font-weight-bold m-0">Type: </p> {{transactionDetail.type}}
+                            </li>
+                            <li>
+                                <p class="font-weight-bold m-0">Created date: </p> {{transactionDetail.createdDate |date: 'yyyy/MM/dd' }}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeDialog()">Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+</div>
